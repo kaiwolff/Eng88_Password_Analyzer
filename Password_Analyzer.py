@@ -5,7 +5,7 @@ class PasswordChecker:
         #Take full user name, year of birth. Ask user what option (generate, check, or exit). # For now, just test variables, shoudl be written up by Munira
 
     def generate_password(self): # will be written by Afshana
-            #check policy, generate random characters that satisfy policy
+            #check policy, generate random characters that satisfy policy - Afshana working on this.
         pass
 
     def check_password(self,password, first_name, second_name, birth_year):
@@ -24,12 +24,14 @@ class PasswordChecker:
             # print("Does not comply with password policy")
 
         not_common = self.check_list(password)
-        print("common passwords checked")
+        # print("common passwords checked")
 
         if not_common:
             report.append("Not in list of common passwords")
+            # print("Not in list of common passwords")
         else:
             report.append("Found in list of common passwords")
+            # print("Found in list of common passwords")
 
         user_detail_free = self.check_user_details(password, first_name, second_name, birth_year)
         if user_detail_free:
@@ -42,8 +44,10 @@ class PasswordChecker:
         else:
             report.append("This means that the password is weak")
 
+        return report
+
     def check_list(self,password):
-        #checks if the given password is part of the common password list.
+        #checks password against passwords in common_passwords.txt. Returns True if password is not in file, False if found
         with open('common_passwords.txt', 'r') as password_file:
             #iterates through whole file
             for line in password_file:
@@ -59,7 +63,7 @@ class PasswordChecker:
 
 
     def check_policy(self,password):
-            # open policy file, output True or False depending whether password complies
+            # reads password policy, checks if password complies with requirements. Returns True if yes, False if not.
             policy_list = self.read_password_policy()
             #now hav ea list defining password policy
             num_specials = policy_list[0]
@@ -91,6 +95,7 @@ class PasswordChecker:
                     count_specials += 1
                 else:
                     #return false if part of password is not in any allowed category
+                    print("illegal character")
                     return False
 
             #now have a count of all the lower, upper, special characters and numbers
@@ -100,7 +105,7 @@ class PasswordChecker:
                 return False
 
     def check_user_details(self, password, user_firstname, user_lastname, user_birthyear):
-        #checks if the password contains the user name or year of birth. Outputs T
+        #checks if the password contains the user name or year of birth. Outputs True if no user details in the password
         if user_firstname in password:
             return False
         elif user_lastname in password:
@@ -115,7 +120,7 @@ class PasswordChecker:
         #formats output in human-readable way. Checks if user wants this put into a file.
         for line in report:
             print(line)
-        #ask user if they want to
+        #ask user if they want to write to file
         wants_file = input("Would you like this written to a file (y/n) ? ")
         if wants_file.lower() == "y":
             write_to_file(report)
@@ -130,7 +135,7 @@ class PasswordChecker:
         return "Report written to password_report.txt"
 
     def read_password_policy(self):
-
+        #reads in password policy, returns variables as a list
         # password_policy = open('password_policy.txt', 'r')
         num_specials = 1
         num_lowercase = 3
@@ -140,13 +145,14 @@ class PasswordChecker:
         max_length = 16
         allowed_specials = "~!\"£$%^&*()_-+="
 
-        return [num_specials, num_lowercase, num_uppercase, num_numbers, min_length, max_length, allowed_specials]
+        return [int(num_specials), int(num_lowercase), int(num_uppercase), int(num_numbers), int(min_length), int(max_length), allowed_specials]
 
 
 
-    #########################TEST
+    #########################TESTBED
 
-password_tester = PasswordChecker()
-print("password_tester generated")
-password_tester.check_password("test","Kai", "Wolff", "1992")
+# password_tester = PasswordChecker()
+# print("password_tester generated")
+# test_list = password_tester.check_password("Test_1929KIl","Kai", "Wolff", "1992")
+# print(test_list)
 
