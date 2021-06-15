@@ -5,7 +5,7 @@ common_passwords.txt - This list was taken from https://github.com/danielmiessle
 ### Required Files
 #### Password Policy
 
-This file is a config file for the password policy, and allows a user to change the various requirements for a password (such as minimum and maximum length, or the list of allowed characters). These can be edited by a user.
+This file is a config file for the password policy, and allows a user to change the various requirements for a password (such as minimum and maximum length, or the list of allowed characters). These can be edited by a user. It is advised to avoid localised characters (2.g £, or Umlauts) as allowed special characters as this interfered our unit testing.
 
 #### Common Passwords File
 

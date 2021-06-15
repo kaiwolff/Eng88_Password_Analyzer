@@ -1,6 +1,9 @@
 import configparser
+import string
+import random
 
 class PasswordChecker:
+
 
     def take_input(self):
         # Take full user name, year of birth. as user what option (generate, check, or exit). Written by MM, AB and KW
@@ -87,6 +90,17 @@ class PasswordChecker:
             report.append("This means that the password is weak")
 
         self.generate_report(report, password)
+
+        if not policy_compliant or not not_common or not user_detail_free:
+            while True:
+                generate_new_password = input("Would you like to have a strong password generated for you? (y/n): ")
+                if generate_new_password.lower() == "y":
+                    self.generate_password(first_name, second_name, birth_year)
+                    break
+                elif generate_new_password.lower() == "n":
+                    break
+                else:
+                    print("Please enter a valid input")
 
     def check_list(self,password):
         #checks password against passwords in common_passwords.txt. Returns True if password is not in file, False if found.Written by KW
@@ -183,23 +197,17 @@ class PasswordChecker:
             if write_type != "1" and write_type != "2":
                 print("Please input a valid option.")
                 continue
-
             elif write_type == "1":
                 file = open('password_report.txt', 'a')
-
             elif write_type == "2":
                 file = open('password_report.txt', 'w')
-
 
             file.write(f"Password was: {password} \n")
             for line in report:
                 file.write(f"{line}\n")
-
             file.write(f"\n")
             return "Report written to password_report.txt"
             break
-
-
 
 
     def read_password_policy(self):
@@ -217,11 +225,4 @@ class PasswordChecker:
 
         return [int(num_specials), int(num_lowercase), int(num_uppercase), int(num_numbers), int(min_length), int(max_length), allowed_specials]
 
-
-
-    #########################TESTBED
-
-password_tester = PasswordChecker()
-# print("password_tester generated")
-password_tester.take_input()
 
