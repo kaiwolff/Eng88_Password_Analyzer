@@ -158,7 +158,7 @@ class PasswordChecker:
 
     def generate_report(self,report, password):
         #formats output in human-readable way. Checks if user wants this put into a file. Written by KW
-        print(f"Password was {password}")
+        print(f"Password was: {password}")
         for line in report:
             print(line)
         #ask user if they want to write to file
@@ -184,9 +184,11 @@ class PasswordChecker:
                 file = open('password_report.txt', 'w')
 
 
-            file.write(f"Password was {password} \n")
+            file.write(f"Password was: {password} \n")
             for line in report:
                 file.write(f"{line}\n")
+
+            file.write(f"\n")
             return "Report written to password_report.txt"
             break
 
