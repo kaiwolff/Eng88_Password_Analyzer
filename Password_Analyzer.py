@@ -8,18 +8,21 @@ class PasswordChecker:
             first_name = input('Enter your first name: ')
             last_name = input('Enter your last name: ')
             birth_year = input('Enter your year of birth: ')
-            options_choices = input('Please enter one of the following options: check password(1), generate password(2) or exit(3) ')
+            while True:
 
-            if options_choices == ('1'):
-                password = input("Please input password to check: ")
-                self.check_password(passiword, first_name, last_name, birth_year)
-            elif options_choices == ('2'):
-                self.generate_password(first_name, last_name, birth_year)
-            elif options_choices == ("3"):
+                options_choices = input('Please enter one of the following options: check password(1), generate password(2) or exit(3) ')
+
+                if options_choices == ('1'):
+                    password = input("Please input password to check: ")
+                    self.check_password(password, first_name, last_name, birth_year)
+                elif options_choices == ('2'):
+                    self.generate_password(first_name, last_name, birth_year)
+                elif options_choices == ('3'):
+                    break
+                else:
+                    print("Please choose a valid option ")
+            if options_choices == '3':
                 break
-            else:
-                print("Please choose a valid option ")
-
             # Should be going back to option_choices
 
     def generate_password(self, user_firstname, user_lastname, user_birthyear):
@@ -162,11 +165,15 @@ class PasswordChecker:
         for line in report:
             print(line)
         #ask user if they want to write to file
-        wants_file = input("Would you like this written to a file (y/n) ? ")
-        if wants_file.lower() == "y":
-            self.write_to_file(report, password)
-        else:
-            return "Report not written to file"
+        while True:
+            wants_file = input("Would you like this written to a file (y/n) ? ")
+            if wants_file.lower() == "y":
+                self.write_to_file(report, password)
+            elif wants_file.lower() == "n":
+                return "Report not written to file"
+            else:
+                print("Please input a valid option.")
+                continue
 
     def write_to_file(self, report, password):
         while True:
@@ -216,6 +223,5 @@ class PasswordChecker:
 
 password_tester = PasswordChecker()
 # print("password_tester generated")
-test_list = password_tester.check_password('tunnel', 'Kai', 'Wolff', '1992')
-print(test_list)
+password_tester.take_input()
 
